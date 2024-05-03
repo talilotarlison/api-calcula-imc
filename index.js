@@ -7,12 +7,19 @@ app.get('/', (req, res) => {
     let peso = req.query.peso;
     let altura = req.query.altura;
 
-    let imc = calculadoraIMC.efetuarCalculoIMC(peso, altura);
-    let status = calculadoraIMC.retornaStatusIMC(imc);
+    if(calculadoraIMC.validaParametro(req.query.peso) && calculadoraIMC.validaParametro(req.query.altura))
+    {
+        let imc = calculadoraIMC.efetuarCalculoIMC(peso, altura);
+        let status = calculadoraIMC.retornaStatusIMC(imc);
 
-    let json = {imc: imc, status: status};
+        let json = {imc: imc, status: status};
 
-    res.json(json);
+        res.json(json);
+    }
+    else
+    {
+        res.status(400).json({'Erro':'Peso ou altura inválidos.'});
+    }
 });
 
 app.listen(8080 , () => {
