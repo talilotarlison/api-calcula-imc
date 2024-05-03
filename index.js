@@ -8,8 +8,11 @@ app.get('/', (req, res) => {
     let altura = req.query.altura;
 
     let imc = calculadoraIMC.efetuarCalculoIMC(peso, altura);
+    let status = calculadoraIMC.retornaStatusIMC(imc);
 
-    res.json({imc: imc});
+    let json = {imc: imc, status: status};
+
+    res.json(json);
 });
 
 app.listen(8080 , () => {
